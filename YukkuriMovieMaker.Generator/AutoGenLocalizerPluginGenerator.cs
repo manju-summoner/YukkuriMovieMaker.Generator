@@ -149,14 +149,13 @@ namespace YukkuriMovieMaker.Generator
                     }
 
                     var sourceBuilder = new StringBuilder();
-                    sourceBuilder.AppendLine($@"//{Path.ChangeExtension(csvFile, ".resx")}
-using YukkuriMovieMaker.Plugin;
+                    sourceBuilder.AppendLine($@"using YukkuriMovieMaker.Plugin;
 
 namespace {symbol.ContainingNamespace.ToDisplayString()}
 {{
     {string.Join(" ", modifiers.Select(x => x.ToString()))} class {symbol.Name} : ILocalizePlugin
     {{
-        public string Name => ""{symbol.Name}多言語対応プラグイン（自動生成）{csvHash}"";
+        public string Name => ""{symbol.Name}多言語対応プラグイン（自動生成）"";
         public void SetCulture(System.Globalization.CultureInfo cultureInfo) => {symbol.Name}.Culture = cultureInfo;
 
 
