@@ -13,7 +13,7 @@ git submodule add https://github.com/manju-summoner/YukkuriMovieMaker.Generator.
 2. ソースジェネレーターを使用したいプロジェクトのcsprojを開き、以下のように編集する
 ```xml
   <ItemGroup>
-    <ProjectReference Include="..\YukkuriMovieMaker.Generator\YukkuriMovieMaker.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />   
+    <ProjectReference Include="..\YukkuriMovieMaker.Generator\YukkuriMovieMaker.Generator\YukkuriMovieMaker.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />   
     <AdditionalFiles Include="**/*.csv" />
   </ItemGroup>
 ```
