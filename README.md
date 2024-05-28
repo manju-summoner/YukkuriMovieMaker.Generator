@@ -8,7 +8,7 @@ csv形式の翻訳ファイルからresx及びclassファイルを生成する�
 ### 使い方
 1. ソースジェネレーターを使用したいプロジェクトが存在するリポジトリのサブモジュールとしてYukkuriMovieMaker.Generatorを追加する
 ```
-git submodule add https://github.com/manju_summoner/YukkuriMovieMaker.Generator.git
+git submodule add https://github.com/manju-summoner/YukkuriMovieMaker.Generator.git
 ```
 2. ソースジェネレーターを使用したいプロジェクトのcsprojを開き、以下のように編集する
 ```xml
