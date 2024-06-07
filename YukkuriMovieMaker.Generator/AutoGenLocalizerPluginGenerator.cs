@@ -197,7 +197,7 @@ namespace {symbol.ContainingNamespace.ToDisplayString()}
                     sourceBuilder.AppendLine(@$"    }}
 }}");
                     //生成したソースコードを追加
-                    context.AddSource($"{symbol.Name}.g.cs", sourceBuilder.ToString());
+                    context.AddSource($"{symbol.ContainingNamespace.ToDisplayString()}.{symbol.Name}.g.cs", sourceBuilder.ToString());
                 });
         }
     }
