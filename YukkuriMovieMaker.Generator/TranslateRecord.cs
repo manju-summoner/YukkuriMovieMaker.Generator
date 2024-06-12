@@ -12,7 +12,8 @@ namespace YukkuriMovieMaker.Generator
         const string kokr = "ko-kr";
         const string eses = "es-es";
         const string arsa = "ar-sa";
-        public static string[] LangCodes = [jajp, enus, zhcn, zhtw, kokr, eses, arsa];
+        const string idid = "id-id";
+        public static string[] LangCodes = [jajp, enus, zhcn, zhtw, kokr, eses, arsa, idid];
 
         [Index(0)]
         public string? Key { get; set; }
@@ -42,6 +43,9 @@ namespace YukkuriMovieMaker.Generator
         public string? Arabic { get; set; }
 
         [Index(9)]
+        public string? BahasaIndonesia { get; set; }
+
+        [Index(10)]
         public string? Unknown { get; set; }
 
         public string? GetValue(string langCode)
@@ -55,6 +59,7 @@ namespace YukkuriMovieMaker.Generator
                 kokr => Korean,
                 eses => Spanish,
                 arsa => Arabic,
+                idid => BahasaIndonesia,
                 _ => Unknown
             };
         }
