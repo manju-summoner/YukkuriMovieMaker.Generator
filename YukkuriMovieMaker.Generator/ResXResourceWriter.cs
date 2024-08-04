@@ -81,7 +81,13 @@ namespace YukkuriMovieMaker.Generator
 
         public void AddResource(string name, string value)
         {
-            writer.WriteLine($"<data name=\"{name}\" xml:space=\"preserve\"><value>{value}</value></data>");
+            var escaped = 
+                value
+                .Replace("&", "&amp;")
+                .Replace("<", "&lt;")
+                .Replace(">", "&gt;");
+
+            writer.WriteLine($"<data name=\"{name}\" xml:space=\"preserve\"><value>{escaped}</value></data>");
         }
 
         public void Dispose()
