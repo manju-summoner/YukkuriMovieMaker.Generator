@@ -5,8 +5,6 @@
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 
-		<!--決定論的ビルド-->
-		<Deterministic>true</Deterministic>
 		<!--Pdb内にソースコードのフルパスを含めない-->
 		<RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\'))</RepoRoot>
 		<PathMap>$(RepoRoot)=.</PathMap>
