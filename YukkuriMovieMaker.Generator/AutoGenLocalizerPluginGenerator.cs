@@ -190,7 +190,7 @@ namespace {symbol.ContainingNamespace.ToDisplayString()}
                     {
                         token.ThrowIfCancellationRequested();
                         sourceBuilder.AppendLine($@"        ///<summary>");
-                        sourceBuilder.AppendLine($@"        /// {record.Japanese?.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).Aggregate((a,b)=>$"{a}\r\n        /// {b}")}");
+                        sourceBuilder.AppendLine($@"        /// {record.Japanese?.Split(["\r\n", "\r", "\n"], StringSplitOptions.None).Aggregate((a,b)=>$"{a}\r\n        /// {b}")}");
                         sourceBuilder.AppendLine($@"        ///</summary>");
                         sourceBuilder.AppendLine($@"        public static string {record.Key} => GetString(""{record.Key}"");");
                     }
