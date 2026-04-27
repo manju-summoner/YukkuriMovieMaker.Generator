@@ -9,12 +9,10 @@ namespace YukkuriMovieMaker.Generator
 
     class ResXResourceWriter : IDisposable
     {
-        readonly Stream stream;
         readonly StreamWriter writer;
-        public ResXResourceWriter(string file)
+        public ResXResourceWriter(Stream stream)
         {
-            stream = new FileStream(file, FileMode.Create, FileAccess.Write);
-            writer = new StreamWriter(stream, Encoding.UTF8);
+            writer = new StreamWriter(stream, Encoding.UTF8, bufferSize: 1024, leaveOpen: true);
 
             writer.WriteLine(@"<?xml version=""1.0"" encoding=""utf-8""?>
 <root>
@@ -95,7 +93,6 @@ namespace YukkuriMovieMaker.Generator
             writer.WriteLine("</root>");
             writer.Flush();
             writer.Dispose();
-            stream.Dispose();
         }
     }
 }

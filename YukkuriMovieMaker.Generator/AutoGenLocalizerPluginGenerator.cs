@@ -129,6 +129,7 @@ namespace YukkuriMovieMaker.Generator
 
                     //resxファイルをソースフォルダに直接出力する
                     //.csとは異なりAddSource等で追加できないため
+                    //内容が変わっていない場合は書き換えない（ファイルのタイムスタンプ更新を回避し、CoreCompile再実行を防ぐ）
                     foreach (var langCode in TranslateRecord.LangCodes)
                     {
                         token.ThrowIfCancellationRequested();
@@ -136,16 +137,27 @@ namespace YukkuriMovieMaker.Generator
                             Path.ChangeExtension(csvFile, ".resx")
                             : Path.ChangeExtension(csvFile, $".{langCode}.resx");
 
-                        using var writer = new ResXResourceWriter(resxPath);
-                        writer.AddResource("CurrentCulture", langCode);
-                        foreach (var record in records)
+                        using var memStream = new MemoryStream();
+                        using (var writer = new ResXResourceWriter(memStream))
                         {
-                            var value = record.GetValue(langCode);
-                            if (string.IsNullOrEmpty(record.Key) || string.IsNullOrEmpty(value))
-                                continue;
-                            writer.AddResource(record.Key!, value!);
+                            writer.AddResource("CurrentCulture", langCode);
+                            foreach (var record in records)
+                            {
+                                var value = record.GetValue(langCode);
+                                if (string.IsNullOrEmpty(record.Key) || string.IsNullOrEmpty(value))
+                                    continue;
+                                writer.AddResource(record.Key!, value!);
+                            }
                         }
 
+                        var newBytes = memStream.ToArray();
+                        if (File.Exists(resxPath))
+                        {
+                            var existing = File.ReadAllBytes(resxPath);
+                            if (BytesEqual(existing, newBytes))
+                                continue;
+                        }
+                        File.WriteAllBytes(resxPath, newBytes);
                     }
 
                     var sourceBuilder = new StringBuilder();
@@ -199,6 +211,14 @@ namespace {symbol.ContainingNamespace.ToDisplayString()}
                     //生成したソースコードを追加
                     context.AddSource($"{symbol.ContainingNamespace.ToDisplayString()}.{symbol.Name}.g.cs", sourceBuilder.ToString());
                 });
+        }
+
+        static bool BytesEqual(byte[] a, byte[] b)
+        {
+            if (a.Length != b.Length) return false;
+            for (int i = 0; i < a.Length; i++)
+                if (a[i] != b[i]) return false;
+            return true;
         }
     }
 }
